@@ -1,0 +1,11 @@
+{
+  "tickets": [
+    {
+      "id": 1,
+      "title": "Ticket 1",
+      "priority": 1,
+      "description": "This is the first ticket",
+      "resolved": false
+    }
+  ]
+}
