@@ -43,9 +43,37 @@ const TicketForm = () => {
       setPriority("");
       setDescription("");
       setResolved(false);
+      // Clear errors
       setErrors({});
     } catch (error) {
       console.error("Error creating ticket:", error);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    // Clear the error associated with the field being edited
+    setErrors({
+      ...errors,
+      [name]: "",
+    });
+
+    switch (name) {
+      case "title":
+        setTitle(value);
+        break;
+      case "priority":
+        setPriority(value);
+        break;
+      case "description":
+        setDescription(value);
+        break;
+      case "resolved":
+        setResolved(e.target.checked);
+        break;
+      default:
+        break;
     }
   };
 
@@ -58,13 +86,20 @@ const TicketForm = () => {
         <label>Title</label>
         <input
           type="text"
+          name="title"
           value={title}
           placeholder="Add the ticket title"
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={handleChange}
+          required
         />
         {errors.title && <span>{errors.title}</span>}
         <label>Priority</label>
-        <select value={priority} onChange={(e) => setPriority(e.target.value)}>
+        <select
+          name="priority"
+          value={priority}
+          onChange={handleChange}
+          required
+        >
           <option value="">Select Priority</option>
           <option value="1">High</option>
           <option value="2">Medium</option>
@@ -73,17 +108,19 @@ const TicketForm = () => {
         {errors.priority && <span>{errors.priority}</span>}
         <label>Description</label>
         <textarea
+          name="description"
           value={description}
           placeholder="Add the ticket description"
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={handleChange}
         />
         {errors.description && <span>{errors.description}</span>}
         <div>
           <label>Mark as resolved </label>
           <input
             type="checkbox"
+            name="resolved"
             checked={resolved}
-            onChange={(e) => setResolved(e.target.checked)}
+            onChange={handleChange}
             className="checkbox"
           />
         </div>
