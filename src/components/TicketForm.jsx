@@ -12,19 +12,19 @@ const TicketForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const errors = {};
+    const newErrors = {};
     if (title.length < 6 || title.length > 18) {
-      errors.title = "Title must be between 6 and 18 characters";
+      newErrors.title = "Title must be between 6 and 18 characters";
     }
     if (!priority) {
-      errors.priority = "Priority is required";
+      newErrors.priority = "Priority is required";
     }
     if (description.length > 30) {
-      errors.description = "Description must be no more than 30 characters";
+      newErrors.description = "Description must be no more than 30 characters";
     }
 
-    if (Object.keys(errors).length > 0) {
-      setErrors(errors);
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
@@ -38,10 +38,12 @@ const TicketForm = () => {
 
       console.log("Ticket created:", response.data);
 
+      // Clear form
       setTitle("");
       setPriority("");
       setDescription("");
       setResolved(false);
+      // Clear errors
       setErrors({});
     } catch (error) {
       console.error("Error creating ticket:", error);
@@ -51,10 +53,8 @@ const TicketForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setErrors({
-      ...errors,
-      [name]: "",
-    });
+    // Clear all errors when any field changes
+    setErrors({});
 
     switch (name) {
       case "title":
