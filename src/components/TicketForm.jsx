@@ -38,12 +38,10 @@ const TicketForm = () => {
 
       console.log("Ticket created:", response.data);
 
-      // Clear form
       setTitle("");
       setPriority("");
       setDescription("");
       setResolved(false);
-      // Clear errors
       setErrors({});
     } catch (error) {
       console.error("Error creating ticket:", error);
@@ -53,7 +51,6 @@ const TicketForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Clear the error associated with the field being edited
     setErrors({
       ...errors,
       [name]: "",
