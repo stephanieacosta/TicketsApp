@@ -1,25 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 
-const TicketList = () => {
-  const baseURL = "http://localhost:5174";
-  const [tickets, setTickets] = useState([]);
-
-  const fetchTickets = async () => {
-    try {
-      const response = await axios.get(`${baseURL}/tickets`);
-      setTickets(response.data);
-    } catch (error) {
-      console.error("Error fetching tickets:", error);
-    }
-  };
-
+const TicketList = ({ baseURL, tickets, setTickets }) => {
   useEffect(() => {
+    const fetchTickets = async () => {
+      try {
+        const response = await axios.get(`${baseURL}/tickets`);
+        setTickets(response.data);
+      } catch (error) {
+        console.error("Error fetching tickets:", error);
+      }
+    };
+
     fetchTickets();
-
-    const intervalId = setInterval(fetchTickets, 1000); // Refrescar cada segundo
-
-    return () => clearInterval(intervalId);
   }, []);
 
   return (

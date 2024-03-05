@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const TicketForm = () => {
-  const baseURL = "http://localhost:5174";
+const TicketForm = ({ baseURL, setTickets }) => {
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("");
   const [description, setDescription] = useState("");
@@ -37,6 +36,7 @@ const TicketForm = () => {
       });
 
       console.log("Ticket created:", response.data);
+      setTickets((prevTickets) => [...prevTickets, response.data]);
 
       setTitle("");
       setPriority("");
